@@ -1,4 +1,4 @@
-pkgname=palemoon-bin
+pkgname=palemoon
 pkgver=26.0.3
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
