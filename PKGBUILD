@@ -6,11 +6,8 @@ arch=('x86_64')
 url="http://linux.palemoon.org/"
 license=('MPL' 'GPL' 'LGPL')
 depends=('gtk2' 'dbus-glib' 'desktop-file-utils' 'libxt' 'mime-types' 'nss' 'alsa-lib')
-optdepends=('palemoon-i18n: language pack for system active language'
-            'hunspell: spell checker and morphological analyzer'
-            'hyphen: library for hyphenation and justification')
+optdepends=('hunspell' 'hyphen')
 provides=("palemoon=$pkgver")
-conflicts=('palemoon')
 install=palemoon.install
 
 source=(palemoon.desktop
