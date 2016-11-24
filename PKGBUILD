@@ -7,10 +7,13 @@ url="http://linux.palemoon.org/"
 license=('MPL' 'GPL' 'LGPL')
 depends=('gtk2' 'dbus-glib' 'desktop-file-utils' 'libxt' 'mime-types' 'nss' 'alsa-lib')
 optdepends=('hunspell' 'hyphen')
+install=palemoon.install
 source=("palemoon-$pkgver.en-US.linux-x86_64.tar.bz2::http://linux.palemoon.org/installer/download.php?v=$pkgver&a=x86_64"
-        "palemoon.desktop")
+        "palemoon.desktop"
+        "palemoon.install")
 sha1sums=('698627185765e1e2fd6daffacc8c99adda587c60'
-          '83ff22ff7a034efac31f1dd5f27ad0115a778743')
+          '83ff22ff7a034efac31f1dd5f27ad0115a778743'
+          '55e9e0840a6216b62ecc6e7307fe3f8119a8c416')
 
 package() {
   install -d "$pkgdir"/usr/{bin,lib}
