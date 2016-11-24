@@ -1,5 +1,5 @@
 pkgname=palemoon
-pkgver=26.5.0
+pkgver=27.0.0
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
 arch=('x86_64')
@@ -9,7 +9,7 @@ depends=('gtk2' 'dbus-glib' 'desktop-file-utils' 'libxt' 'mime-types' 'nss' 'als
 optdepends=('hunspell' 'hyphen')
 source=("palemoon-$pkgver.en-US.linux-x86_64.tar.bz2::http://linux.palemoon.org/installer/download.php?v=$pkgver&a=x86_64"
         "palemoon.desktop")
-sha1sums=('5baebca66165749f4c80bc2bd8837c64c0bac551'
+sha1sums=('698627185765e1e2fd6daffacc8c99adda587c60'
           '83ff22ff7a034efac31f1dd5f27ad0115a778743')
 
 package() {
