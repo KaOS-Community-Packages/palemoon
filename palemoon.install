@@ -1,0 +1,15 @@
+ Some colored makepkg-like functions
+#!/bin/bash
+# tputcolors
+post_install() {
+	post_upgrade
+}
+
+post_upgrade() {
+	  echo -e '\e[0;32m Be aware, with this new version,27.0.0'
+	  echo -e '\e[0;32m a lof of things have changed, so maybe you can experience an issue'
+          echo -e '\e[0;32m after update it. If that is the case, just remove your .moonchild productions folder.'
+          echo -e '\e[0;32m You will lose stored information! (as bookmarks, passwords...)'
+          echo -e '\e[0;32m You can see the major changes on this new version here:'
+          echo -e '\e[0;32m http://www.palemoon.org/releasenotes.shtml \e[0m'
+}
