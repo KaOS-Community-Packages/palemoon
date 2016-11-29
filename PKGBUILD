@@ -1,5 +1,5 @@
 pkgname=palemoon
-pkgver=27.0.0
+pkgver=27.0.1
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
 arch=('x86_64')
@@ -11,7 +11,7 @@ install=palemoon.install
 source=("palemoon-$pkgver.en-US.linux-x86_64.tar.bz2::http://linux.palemoon.org/installer/download.php?v=$pkgver&a=x86_64"
         "palemoon.desktop"
         "palemoon.install")
-sha1sums=('698627185765e1e2fd6daffacc8c99adda587c60'
+sha1sums=('f00981cbdac1c5dbf228e0c53a4a3fcc6d81e6f0'
           '83ff22ff7a034efac31f1dd5f27ad0115a778743'
           '55e9e0840a6216b62ecc6e7307fe3f8119a8c416')
 
