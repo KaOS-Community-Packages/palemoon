@@ -1,6 +1,3 @@
- Some colored makepkg-like functions
-#!/bin/bash
-# tputcolors
 post_install() {
 	post_upgrade
 }
