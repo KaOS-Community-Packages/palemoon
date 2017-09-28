@@ -13,7 +13,7 @@ source=("${pkgname}-${pkgver}.en-US.linux-x86_64.tar.bz2::${url}/installer/downl
         'changelog.md')
 md5sums=('38303c87c4ece2d9a763fd382a89c80f'
          '0d4979b1746372fc2408bf76f146ae05'
-         '0ea7f51c94a4cfa0817390dda9c14197')
+         '72100c01fbadf2f8c922ff4e67fb8d9b')
 
 package() {
     install -d ${pkgdir}/usr/{bin,lib}
