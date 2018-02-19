@@ -1,5 +1,5 @@
 pkgname=palemoon
-pkgver=27.6.2
+pkgver=27.7.2
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
 arch=('x86_64')
@@ -11,9 +11,9 @@ install=${pkgname}.install
 source=("${pkgname}-${pkgver}.en-US.linux-x86_64.tar.bz2::${url}/installer/download.php?v=${pkgver}&a=x86_64"
         "${pkgname}.desktop"
         'changelog.md')
-md5sums=('3b54bd1c0c80fa1df71d63ac71e4def0'
+md5sums=('3cab7778dc7720eb9005c9d62ced2897'
          '0d4979b1746372fc2408bf76f146ae05'
-         '67713d97e4256415851cbd5ab8878a87')
+         '490f6f3e5474f48d8003cdc1601b90f0')
 
 package() {
     install -d ${pkgdir}/usr/{bin,lib}
@@ -35,5 +35,4 @@ package() {
     
     ln -s /usr/share/hunspell ${pkgdir}/usr/lib/${pkgname}/dictionaries
     ln -s /usr/share/hyphen ${pkgdir}/usr/lib/${pkgname}/hyphenation
-    ln -sf ${pkgname} ${pkgdir}/usr/lib/${pkgname}/${pkgname}-bin
 }
