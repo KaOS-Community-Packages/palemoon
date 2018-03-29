@@ -1,64 +1,50 @@
-<h1>27.7.2 (2018-02-01)</h1>
-This is a security and stability update.
+<h1>27.8.3 (2018-03-28)</h1>
+This is a small update to address a pervasive crashing issue.
 <h2>Changes/fixes:</h2>
-* Changed the X-Content-Type-Options: nosniff behavior to only check "success" class server responses, for web compatibility reasons.
-* Changed the performance timer resolution once more to a granularity of 1 ms, after evaluating more potential ways of abusing Spectre.
-* This takes the most cautious approach possible lacking more information (because apparently NDAs have been signed over this between mainstream players), follows Safari's lead, and should make it not just infeasible but downright impossible to use these timers for nefarious purposes in this context.
-* Improved the debug-only startup cache wrapper to prevent a rare crash.
-* Fixed a crash in the XML parser.
-* Added a check for integer overflow in AesTask::DoCrypto() (CVE-2018-5122) DiD
-* Fixed a potential race condition in the browser cache.
-* Fixed a crash in HTML media elements (CVE-2018-5102)
-* Fixed a crash in XHR using workers.
-* Fixed a crash with some uncommon FTP operations.
-* Fixed a potential race condition in the JAR library.
+* Backed out some responsive layout code that caused intermittent but not uncommon crashes in the browser depending on window sizes and page content.
+
+<h1>27.8.2 (2018-03-22)</h1>
+This is a security update.
+<h2>Changes/fixes:</h2>
+* Privacy fix: prevented update checks for the default theme.
+* Added a user-agent override for Dropbox to improve compatibility with their service.
+* Fixed an issue with mouseover handling related to (CVE-2018-5103). DiD
+* Disabled the Mac OSX Nano allocator. DiD
+* Fixed (CVE-2018-5129) OOB Write.
+* Updated the lz4 library to 1.8.0 to solve potential issues. DiD
+* Fixed (CVE-2018-5137) Path traversal on chrome:// URLs
+* Fixed several memory safety an synchronicity hazards.
 
 <strong>DiD</strong> This means that the fix is "Defense-in-Depth": It is a fix that does not apply to a (potentially) actively exploitable vulnerability in Pale Moon, but prevents future vulnerabilities caused by the same code when surrounding code changes, exposing the problem, or when new attack vectors are discovered.
 
-<h2>27.7.1 (2018-01-18)</h2>
-This is a minor emergency update to address website breakage and a theme issue.
-<h3>Changes/fixes:</h3>
-* Added support for Array.prototype[@@unscopables].
-* Unfortunately, the addition of Javascript's ES6 Unscopables in 27.7.0 was incomplete, which caused a number of websites (e.g. Chase on-line banking, some Russian government sites) to display blank or not complete loading after updating to that version of the browser. This update should fix the problem by adding the missing part of the feature.
-* Fixed an issue with the default theme causing tab borders to be drawn too thick at higher settings for visual element scaling (125%/150%) in Windows.
+<h1>27.8.1 (2018-03-06)</h1>
+This is a small update to address some breaking issues.
+<h2>Changes/fixes:</h2>
+* Backed out the NSPR/NSS update from 27.8.0 for causing crashes, general operational instability and handshake issues.
+* Disabled TLS 1.3 draft support by default, because with the NSS backout we only support an older draft right now that is no longer current and may cause connectivity issues. You can manually re-enable it at your own risk in about:config by setting security.tls.version.max to 4.
 
-<h2>27.7.0 (2018-01-15)</h2>
-This is a stability and bugfix release, as well as adding a number of new features to further improve web compatibility.
-<h3>Changes/fixes:</h3>
-* Reorganized access to preferences (moved to the Tools menu on Linux, and renamed from "Options" to "Preferences" on Windows).
-* Renamed "Restart with add-ons disabled" to "Restart in Safe Mode" to better reflect what it does.
-* Worked around an issue with some improperly-encoded PNG files not decoding after our libpng update.
-* Fixed an issue on Mac builds not properly populating the application menu.
-* Added "My home page" as an option for new tabs.
-* Added an option to disable the 4th and 5th mouse buttons (Windows).
-* (mouse.button4.enabled and mouse.button5.enabled, respectively)
-* Improved the resetting of non-default profiles.
-* Fixed an issue with details/summary having the incorrect height if floated, breaking layouts.
-* Made several more improvements to the details/summary tags to align them with the current spec and fix some additional bugs.
-* Implemented support for flex/columnset contents inside buttons to align its behavior with other browsers.
-* (this should fix layout issues with Twitch's new web interface)
-* Fixed an issue where CSS clone operations would draw a border.
-* Changed the way fractional border widths are rounded to provide more natural behavior.
-* Fixed an issue where number inputs would incorrectly be flagged as read-only.
-* Added assets for tile display in the Windows start panel.
-* Finished sync infra swapover by adding a one-time pref migration for server used.
-* Improved WebAudio API: Return the connected audio node from AudioNode.connect()
-* Added support for a default playback start position in media elements.
-* Fixed an assert in cubeb-alsa code (Linux).
-* Added support for media cue-change events (e.g. subtitles).
-* Updated SQLite to 3.21.0.
-* Fixed a crash when trying to use the platform embedded.
-* Fixed devtools (gcli) screenshots on vertical-text pages.
-* Fixed devtools copy as cURL for POST requests.
-* Improved the HTML editor component (several bugfixes).
-* Added support for ES7's exponentiation a ** b operator.
-* Fixed an issue with arrow functions incorrectly creating an 'arguments' binding.
-* Added Javascript's ES6 "unscopables".
-<h3>Security/privacy fixes:</h3>
-* Disabled automatic filling in of log-in details by default to prevent potential risks of credentials being abused (e.g. for tracking) or stolen.
-* Added a preference (in the category security) to easily enable or disable automatic filling in of log-in data.
-* Removed the sending of referrers when opening a link in a new private window.
-* Added an option to disable the page visibility Web API (dom.visibilityAPI.enabled), allowing users to prevent pages from knowing whether they are being actively displayed to the user or not.
-* Removed the "ask every time" policy for cookies. For granular control, please use any of the excellent available extensions to regulate cookie use on a per-site or per-url basis.
-* Added support for X-Content-Type-Options: nosniff (for scripts).
-* Changed the resolution of performance timers to a level where any future potential abuse for hardware-timing attacks becomes impractical. DiD
+<h1>27.8.0 (2018-03-02)</h1>
+This is a development update with new and improved features and bugfixes.
+<h2>Changes/fixes:</h2>
+* Added support for emojis on Windows systems that have relatively poor support for them with standard font sets by including our own font (EmojiOne based for now).
+* Added a setting in preferences to select the use of tab previews with Ctrl+Tab.
+* Added Eyedropper menu entry to the AppMenu.
+* Added a preference to control whether the text cursor (caret) should be thicker when dealing with CJK characters or not (default = yes).
+* Added URL fix-ups for schemes (mis-typed "ttp://" etc.).
+* Added support for ES6 "Symbol species".
+* Updated our TLS 1.3 support to the latest (probably final) draft.
+* Fixed gap inconsistency in the tabstrip.
+* Fixed a number of browser crashes.
+* Fixed a crash with the exponentiation operator "**"
+* Set the performance timer granularity to 1 ms.
+* Updated the kiss-fft library to our forked 1.4.0 version.
+* Disabled a potentially problematic optimization on Win 8+ with high contrast themes in use.
+* Removed the notification bar when in full screen to prevent unwanted visible screen elements.
+* Removed unmaintained and insecure WebRTC code - building with WebRTC enabled is no longer an option.
+* Removed redundant checks for "Vista or later" since that is all we support.
+* Added display of the http status to raw request displays.
+* Added a workaround for cloned videos not retaining their muted state.
+* Added a temporary workaround to avoid crashes on trackless media.
+* Removed some superfluous ellipses from menu labels.
+* Fixed undesired shrinking of line heights as a result of setting minimum font size in preferences.
+* Fixed some issues with setting the new tab preference (regression).
