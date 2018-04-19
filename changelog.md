@@ -1,50 +1,20 @@
-<h1>27.8.3 (2018-03-28)</h1>
-This is a small update to address a pervasive crashing issue.
+<h1>27.9.0 (2018-04-17)</h1>
+This is the last major development update for the v27 milestone (codenamed "Tycho").
+After this, we will be focusing our efforts for new features entirely on UXP and the new v28 milestone building on it. We will continue to support v27.9 with security and stability updates for a while, but no major new features will be added from this point forward.
 <h2>Changes/fixes:</h2>
-* Backed out some responsive layout code that caused intermittent but not uncommon crashes in the browser depending on window sizes and page content.
-
-<h1>27.8.2 (2018-03-22)</h1>
-This is a security update.
-<h2>Changes/fixes:</h2>
-* Privacy fix: prevented update checks for the default theme.
-* Added a user-agent override for Dropbox to improve compatibility with their service.
-* Fixed an issue with mouseover handling related to (CVE-2018-5103). DiD
-* Disabled the Mac OSX Nano allocator. DiD
-* Fixed (CVE-2018-5129) OOB Write.
-* Updated the lz4 library to 1.8.0 to solve potential issues. DiD
-* Fixed (CVE-2018-5137) Path traversal on chrome:// URLs
-* Fixed several memory safety an synchronicity hazards.
-
-<strong>DiD</strong> This means that the fix is "Defense-in-Depth": It is a fix that does not apply to a (potentially) actively exploitable vulnerability in Pale Moon, but prevents future vulnerabilities caused by the same code when surrounding code changes, exposing the problem, or when new attack vectors are discovered.
-
-<h1>27.8.1 (2018-03-06)</h1>
-This is a small update to address some breaking issues.
-<h2>Changes/fixes:</h2>
-* Backed out the NSPR/NSS update from 27.8.0 for causing crashes, general operational instability and handshake issues.
-* Disabled TLS 1.3 draft support by default, because with the NSS backout we only support an older draft right now that is no longer current and may cause connectivity issues. You can manually re-enable it at your own risk in about:config by setting security.tls.version.max to 4.
-
-<h1>27.8.0 (2018-03-02)</h1>
-This is a development update with new and improved features and bugfixes.
-<h2>Changes/fixes:</h2>
-* Added support for emojis on Windows systems that have relatively poor support for them with standard font sets by including our own font (EmojiOne based for now).
-* Added a setting in preferences to select the use of tab previews with Ctrl+Tab.
-* Added Eyedropper menu entry to the AppMenu.
-* Added a preference to control whether the text cursor (caret) should be thicker when dealing with CJK characters or not (default = yes).
-* Added URL fix-ups for schemes (mis-typed "ttp://" etc.).
-* Added support for ES6 "Symbol species".
-* Updated our TLS 1.3 support to the latest (probably final) draft.
-* Fixed gap inconsistency in the tabstrip.
-* Fixed a number of browser crashes.
-* Fixed a crash with the exponentiation operator "**"
-* Set the performance timer granularity to 1 ms.
-* Updated the kiss-fft library to our forked 1.4.0 version.
-* Disabled a potentially problematic optimization on Win 8+ with high contrast themes in use.
-* Removed the notification bar when in full screen to prevent unwanted visible screen elements.
-* Removed unmaintained and insecure WebRTC code - building with WebRTC enabled is no longer an option.
-* Removed redundant checks for "Vista or later" since that is all we support.
-* Added display of the http status to raw request displays.
-* Added a workaround for cloned videos not retaining their muted state.
-* Added a temporary workaround to avoid crashes on trackless media.
-* Removed some superfluous ellipses from menu labels.
-* Fixed undesired shrinking of line heights as a result of setting minimum font size in preferences.
-* Fixed some issues with setting the new tab preference (regression).
+* Fixed a number of spec compliance issues in our media subsystem.
+* Added a trailing slash to referrers when policy is set to fix some web compatibility issues.
+* Fixed the property order in Object.getOwnPropertyNames(string) and others for web compatibility.
+* Updated RegExp(RegExp object, flags) to the ES6 standard specification.
+* Changed the embedded font from the no longer free EmojiOne to the open-licensed Twemoji (with additional fixes). This also further extends unicode support to Unicode 10 emoji(s). Please note that as a result, color emoji(s) will look different than before.
+* Adjusted some things in our memory allocator code to provide, among other things, better allocation alignment on Windows.
+* Made the attempt to migrate people from the old sync server domain name to the current one more aggressive. We will be retiring the old pmsync.palemoon.net Sync server address shortly to remove the need for us to maintain a security certificate for it; this preference migration should automatically put everyone on the correct server address (pmsync.palemoon.org) when upgrading.
+* Made reading of the sessionstore synchronous, to speed up startup and prevent the homepage from being loaded when restoring a session.
+* Added a fix to switch to the correct window/tab when a web notification is clicked.
+* Changed the placeholder text to not include "Search" when all search functions from the address bar are disabled.
+* Enabled the use of Skia for canvas on Linux and OSX.
+* Worked around a potential cause for some non-standard bitmapped fonts ending up with incorrect line heights (I'm looking at you, Noto fonts!).
+* Added a workaround for incorrectly-encoded JPEG-XR images with planar alpha. Ultimately, the jxrlib reference implementation should be fixed to encode according to spec.
+* Aligned XCTO:nosniff allowed script MIME types with the updated spec.
+* Improved the logic for storing vector images in the surface cache.
+* Fixed character set handling for XMLHttpRequests.
