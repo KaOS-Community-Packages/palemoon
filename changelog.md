@@ -1,20 +1,21 @@
-<h1>27.9.0 (2018-04-17)</h1>
-This is the last major development update for the v27 milestone (codenamed "Tycho").
-After this, we will be focusing our efforts for new features entirely on UXP and the new v28 milestone building on it. We will continue to support v27.9 with security and stability updates for a while, but no major new features will be added from this point forward.
+<h1>27.9.2 (2018-05-18)</h1>
+This is a security and stability update.
 <h2>Changes/fixes:</h2>
-* Fixed a number of spec compliance issues in our media subsystem.
-* Added a trailing slash to referrers when policy is set to fix some web compatibility issues.
-* Fixed the property order in Object.getOwnPropertyNames(string) and others for web compatibility.
-* Updated RegExp(RegExp object, flags) to the ES6 standard specification.
-* Changed the embedded font from the no longer free EmojiOne to the open-licensed Twemoji (with additional fixes). This also further extends unicode support to Unicode 10 emoji(s). Please note that as a result, color emoji(s) will look different than before.
-* Adjusted some things in our memory allocator code to provide, among other things, better allocation alignment on Windows.
-* Made the attempt to migrate people from the old sync server domain name to the current one more aggressive. We will be retiring the old pmsync.palemoon.net Sync server address shortly to remove the need for us to maintain a security certificate for it; this preference migration should automatically put everyone on the correct server address (pmsync.palemoon.org) when upgrading.
-* Made reading of the sessionstore synchronous, to speed up startup and prevent the homepage from being loaded when restoring a session.
-* Added a fix to switch to the correct window/tab when a web notification is clicked.
-* Changed the placeholder text to not include "Search" when all search functions from the address bar are disabled.
-* Enabled the use of Skia for canvas on Linux and OSX.
-* Worked around a potential cause for some non-standard bitmapped fonts ending up with incorrect line heights (I'm looking at you, Noto fonts!).
-* Added a workaround for incorrectly-encoded JPEG-XR images with planar alpha. Ultimately, the jxrlib reference implementation should be fixed to encode according to spec.
-* Aligned XCTO:nosniff allowed script MIME types with the updated spec.
-* Improved the logic for storing vector images in the surface cache.
-* Fixed character set handling for XMLHttpRequests.
+* We changed the language strings for softblocked items so people will cry less when we do our job.
+* (CVE-2018-5174) Prevent potential SmartScreen bypass on Windows 10.
+* (CVE-2018-5173) Fixed an issue in the Downloads panel improperly rendering some Unicode characters, allowing for the file name to be spoofed. This could be used to obscure the file extension of potentially executable files from user view in the panel.
+* (CVE-2018-5177) Fixed a vulnerability in the XSLT component leading to a buffer overflow and crash if it occurs.
+* (CVE-2018-5159) Fixed an integer overflow vulnerability in the Skia library resulting in possible out-of-bounds writes.
+* (CVE-2018-5154) Fixed a use-after-free vulnerability while enumerating attributes during SVG animations with clip paths.
+* (CVE-2018-5178) Fixed a buffer overflow during UTF8 to Unicode string conversion within JavaScript with extremely large amounts of data. This vulnerability requires the use of a malicious or vulnerable extension in order to occur.
+* Fixed several stability issues (crashes) and memory safety hazards.
+
+<h1>27.9.1 (2018-05-07)</h1>
+This is a maintenance release.
+<h2>Changes/fixes:</h2>
+* Removed the unused/incomplete places protocol handler.
+* Worked around an issue with MSE media without a Track ID. This should help with the playability of some live streams.
+* Ported across jemalloc improvements from UXP.
+* Ported across cairo mutex improvements from UXP.
+* Added support for FFmpeg 4.0/libavcodec 58.
+* Added a fix for Windows 10's "isAlpha()" not being what one would expect in v1803.
