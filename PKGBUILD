@@ -1,27 +1,27 @@
 pkgname=palemoon
-pkgver=28.7.0
+pkgver=29.2.0
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
 arch=('x86_64')
 url="https://linux.palemoon.org"
 license=('MPL' 'GPL' 'LGPL')
-depends=('gtk2' 'dbus-glib' 'desktop-file-utils' 'libxt' 'mime-types' 'nss' 'alsa-lib')
+depends=('gtk3' 'dbus-glib' 'desktop-file-utils' 'libxt' 'mime-types' 'nss' 'alsa-lib')
 optdepends=('hunspell' 'hyphen')
 install=${pkgname}.install
-source=("http://linux.palemoon.org/datastore/release/${pkgname}-${pkgver}.linux-x86_64.tar.bz2"
+source=("https://linux.palemoon.org/datastore/release/${pkgname}-${pkgver}.linux-x86_64-gtk3.tar.xz"
         "${pkgname}.desktop"
-        'changelog.md')
-md5sums=('387cf9a04966cc54aef54f86a7647f9a'
+        'changelog.html')
+md5sums=('8d5f6e00aabc9c735241904495b13992'
          '0d4979b1746372fc2408bf76f146ae05'
-         'b1d2195940549eabc9fe2d1a2b5e540e')
+         'f090278b50ab82a2b614d677d594b736')
 
 package() {
     install -d ${pkgdir}/usr/{bin,lib}
     cp -r ${pkgname}/ ${pkgdir}/usr/lib/${pkgname}
     ln -s ../lib/${pkgname}/${pkgname} ${pkgdir}/usr/bin/${pkgname}
     install -Dm644 ${pkgname}.desktop ${pkgdir}/usr/share/applications/${pkgname}.desktop
-    install -Dm644 changelog.md \
-        ${pkgdir}/usr/share/${pkgname}/changelog.md
+    install -Dm644 changelog.html \
+        ${pkgdir}/usr/share/${pkgname}/changelog.html
     
     local size
     for size in 16 32 48; do
