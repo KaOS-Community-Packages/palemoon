@@ -13,7 +13,7 @@ source=("https://linux.palemoon.org/datastore/release/${pkgname}-${pkgver}.linux
         'changelog.html')
 md5sums=('a3898f59d36e02a009a43e1d75e88f9b'
          '0d4979b1746372fc2408bf76f146ae05'
-         'f090278b50ab82a2b614d677d594b736')
+         'e9146499a19b073acfc200f7a2367e45')
 
 package() {
     install -d ${pkgdir}/usr/{bin,lib}
