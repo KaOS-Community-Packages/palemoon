@@ -1,3 +1,3 @@
 post_upgrade() {
-    KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true kdialog --title "Changelog" --textbox /usr/share/palemoon/changelog.md 900 600
+    KDE_SESSION_VERSION=5 KDE_FULL_SESSION=true kdialog --title "Changelog" --textbox /usr/share/palemoon/changelog.html 900 600
 }

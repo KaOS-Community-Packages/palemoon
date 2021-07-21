@@ -1,20 +1,26 @@
-<h1>29.2.0 (2021-04-27)</h1>
-<p>with this version, we will no longer be supporting unmaintained legacy Firefox extensions that are not updated for/targeting Pale Moon directly.</p>
+<h1>29.3.0 (2021-07-19/20)</h1>
+<p>This is a development, bugfix and security release.</p>
+
 <h2>Changes/fixes:</h2>
-<ul><li>When opening tabs from the History side bar, Pale Moon will now warn you about the action if it would result in opening many tabs at once.</li>
-<li>Pale Moon now offers "Open All in Tabs" on bookmark folders even if there is only one sub-item in it, for UI consistency.</li>
-<li>Added media format controls in the Content category of Preferences.</li>
-<li>Added controls for preferred color scheme. See implementation notes.</li>
-<li>Updated several site-specific user-agent overrides for web compatibility.</li>
-<li>Removed the ability to accept Firefox IDs for extension installation.</li>
-<li>Removed conditional Macintosh code from the application front-end.</li>
-<li>Updated the AV1 reference library to 2.0.</li>
-<li>Cleaned up more Android code from the platform.</li>
-<li>Updated the embedded emoji font to cater to even more race-dependent profession emoji.</li>
-<li>Fixed an overflow in clip paths, potentially causing them to be rendered incorrectly.</li>
-<li>Added CSS values smooth, high-quality and pixelated to the image-rendering keyword.</li>
-<li>Implemented Intl.NumberFormat.formatToParts() to allow deconstruction of localized number formats by scripts.</li>
-<li>Reinstated the dom.details_element.enabled preference and fixed a rendering issue with summary/details html elements.</li>
-<li>Fixed an issue with CSP .nonce attributes on elements.</li>
-<li>Security issues addressed: CVE-2021-29946 DiD and CVE-2021-23994 DiD .</li>
-<li>Unified XUL Platform Mozilla Security Patch Summary: 2 DiD, 14 not applicable.</li></ul>
+<ul><li>"Web Developer" is now called "Developer Tools" in the menus.</li>
+    <li>Updated and aligned about:home, the QuickDial page and logopage styling.</li>
+    <li>Re-organized the privacy category in the preferences window.</li>
+    <li>Enabled brotli compression for http for sites that support it. See implementation notes.</li>
+    <li>Implemented EventTarget as a constructor.</li>
+    <li>Updated Windows 10 toolkit styling.</li>
+    <li>Updated the port blacklist (removed 10080). See implementation notes.</li>
+    <li>CSS: Implemented calc() and animation support for stroke-dashoffset.</li>
+    <li>Added support for checking boolean preferences to chrome CSS style sheets, to support more advanced theming options.</li>
+    <li>Added support for dynamic dark color capable themes in CSS.</li>
+    <li>Updated ResizeObserver implementation to a more recent specification. See implementation notes.</li>
+    <li>Removed a metric ton of Macintosh code.</li>
+    <li>Removed obsolete system theme support from the layout engine.</li>
+    <li>Fixed several crashes.</li>
+    <li>Linux: blocked particularly old versions of Mesa/Nouveau drivers due to issues.</li>
+    <li>Security issues addressed: CVE-2021-30547 and several other issues that don't have a CVE number.</li>
+    <li>Unified XUL Platform Mozilla Security Patch Summary: 3 fixed, 3 DiD, 2 deferred (DiD), 12 not applicable.</li></ul>
+
+<h2>Implementation notes:</h2>
+<ul><li>Brotli compression (introduced a few years back) has originally been restricted to https only in web browsers because there was some concern about interaction with middleware boxes with poor design trying to transparently recompress data not recognizing the new compression stream type and causing failures. The kind of processing done in those boxes (SDCH) has long since been deprecated. Since then, the segregation for Brotli between http and https has been maintained by Chrome and Firefox as a vessel to further promote https over http by artificially keeping http less efficient (denying the use of the more dense Brotli compression). Since there is no technical reason not to enable Brotli over http, we will accept (by way of Accept-encoding) Brotli over plain http from this version on, offering up to 20% less bandwidth use when servers also support it.</li>
+    <li>We maintain a blacklist of ports that should not be addressed from a browser (primarily to prevent scripted abuse). Not too long ago we updated these ports with a number of additional (higher range) ones, including port 10080 (Amanda). Unfortunately there is too much overlap with other common services/devices that also use this (arbitrarily chosen) port, so we've removed this particular port again from our blacklist.</li>
+    <li>The ResizeObserver implementation was changed to now support the updated specification for this API, including the experimental properties contentBoxSize and borderBoxSize which allows finer control to respond to size changes of elements. The old spec sizing property of contentRect remains supported for web compatibility.</li></ul>
