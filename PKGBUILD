@@ -1,5 +1,5 @@
 pkgname=palemoon
-pkgver=29.3.0
+pkgver=29.4.2.1
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
 arch=('x86_64')
@@ -11,9 +11,9 @@ install=${pkgname}.install
 source=("https://linux.palemoon.org/datastore/release/${pkgname}-${pkgver}.linux-x86_64-gtk3.tar.xz"
         "${pkgname}.desktop"
         'changelog.html')
-md5sums=('a3898f59d36e02a009a43e1d75e88f9b'
+md5sums=('3ddaa6fc45eff78675ce535b6518d01e'
          '0d4979b1746372fc2408bf76f146ae05'
-         'e9146499a19b073acfc200f7a2367e45')
+         'f2b8aeddca4bccab4ea6dce081d82fb0')
 
 package() {
     install -d ${pkgdir}/usr/{bin,lib}
