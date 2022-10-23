@@ -2,7 +2,7 @@
 
 Open source web browser based on Firefox focusing on efficiency.
 
-[Homepage](https://www.palemoon.org/)
+[Linux binaries](https://linux.palemoon.org/download/mainline/)
 
 ### Install:
 ```

@@ -1,3 +1,144 @@
-<h1>29.4.2.1 (2021-11-11)</h1>
-<p>This is a small update to address the folowing issue:</p>
-<p>Autocomplete drop-downs would have uncorrect styling, causing issues with custom themes (e.g. unreadable) and not displaying as-intended.</p>
+<h3><a name="v31.3.0"></a>v31.3.0 (2022-09-27)</h3>
+This is a major development, bugfix and security release.
+
+<span style="font-weight: bold;">Changes/fixes:</span>
+<ul>
+    <li>Implemented <code>.at(index)</code> JavaScript method on built-in indexables (<code>Array</code>, <code>String</code>, <code>TypedArray</code>).</li>
+    <li>Implemented the use of EventSource in workers.</li>
+    <li>Enabled the sending of the Origin: header by default on same-origin requests</li>
+    <li>Changed how Pale Moon is built. We are now using Visual Studio 2022 on Windows, and have made build system changes to reduce build times and pressure on the linker on all platforms.</li>
+    <li>Changed how Pale Moon handles standalone wave audio files(.wav). See implementation notes.</li>
+    <li>Improved string normalization.</li>
+    <li>Updated the handling of CSS "supports" to now accept unparenthesized strings (spec update). </li>
+    <li>Updated the handling of flex containers in web pages for web compatibility.</li>
+    <li>Fixed various issues when building for Mac OS X.</li>
+    <li>Fixed various C++ standard conformance issues in the source code.</li>
+    <li>Fixed several issues building on SunOS and Linux with various configurations and gcc versions.</li>
+    <li>Fixed an issue with regular expressions' <code>dotAll</code> syntax and usage. See implementation notes.</li>
+    <li>Switched custom hash map to <code>std::unordered_map</code> where prudent.</li>
+    <li>Cleaned up and updated IPC thread locking code.</li>
+    <li>Removed spacing for accessibility focus rings in form controls to align styling of them with expected metrics.</li>
+    <li>Removed the unnecessary control module for building with non-standard configurations of the platform.</li>
+    <li>Removed the <code>-moz</code> prefix from <code>min-content</code> and <code>max-content</code> CSS keywords where it was still in use.</li>
+    <li>Security fixes: CVE-2022-40956 and CVE-2022-40958.</li>
+    <li>UXP Mozilla security patch summary: 2 fixed, 11 not applicable.</li></ul>
+
+<span style="font-weight: bold;">Implementation notes:</span>
+<ul>
+    <li>Pale Moon would previously send standalone wave audio files (.wav) to the system-configured media player if they would be opened standalone (i.e. not inside a <code>&lt;media&gt;</code> HTML element in a page). This was done due to the historical use of rather exotic codecs in .wav files that would not be broadly supported in the browser. In the current day, however, this is much less of a concern. If you prefer to retain the old behavior and send .wav files to whatever the configured system media player is, then you should set the preference <code>media.wave.play-stand-alone</code> to <code>false</code> in about:config.</li>
+    <li>There was a spec compliance issue with the <code>dotAll</code> regular expression implementation, causing it to not work properly. Specifically, using the <code>new RegExp()</code> constructor would not accept "s" as a flag, and the <code>.dotAll</code> property was not cased properly (all lowercase) causing compatibility issues.</li></ul>
+
+<h3><a name="v31.2.0.1"></a>v31.2.0.1 (2022-08-03)</h3>
+This is a small out-of-band update to address the fact that the final builds did not include the intended NSS library update.
+
+<h3><a name="v31.2.0"></a>v31.2.0 (2022-08-02)</h3>
+This is a major bugfix and development update. Special thanks to Athenian200, Jobbautista9, Martok and dbsoft for their contributions this cycle :)
+
+<span style="font-weight: bold;">Changes/fixes:</span>
+<ul>
+    <li>Implemented CSS <code>white-space: break-spaces</code> for web compatibility.</li>
+    <li>Implemented <code>Intl.RelativeTimeFormat</code> for web compatibility.</li>
+    <li>Implemented "Origin header CSRF mitigation". This is still disabled by default to investigate potential issues with CloudFlare-backed sites.</li>
+    <li>Implemented support for async generator methods in JavaScript.</li>
+    <li>Added preliminary support for building on Apple Silicon like M1/M2 SoC.</li>
+    <li>Added support for building with Visual Studio 2022.</li>
+    <li>Improved the handling of CSS "sticky" elements in tables.</li>
+    <li>Improved stack size limits on all platforms. See implementation notes.</li>
+    <li>Updated <code>function.toString</code> handling to align with the updated JavaScript spec. This should improve web compatibility.</li>
+    <li>Updated Unicode support to Unicode v11, and updated the ICU library accordingly. Building without ICU is no longer supported.</li>
+    <li>Updated many in-tree third-party libraries to pick up various performance and stability improvements.</li>
+    <li>Updated site-specific user-agent overrides to work around issues with Google fonts, Citi bank (again!) and MeWe.</li>
+    <li>Removed some leftover (and unused) telemetry code in the platform and front-end.</li>
+    <li>Fixed an issue with VP9 video playback on Windows on some systems.</li>
+    <li>Fixed an issue with the add-ons manager not properly handling empty update URLs.</li>
+    <li>Fixed a major performance regression on *nix based systems due to incorrect thread handling.</li>
+    <li>Fixed volume handling when building with the <code>sndio</code> audio back-end.</li>
+    <li>Pale Moon no longer applies content security policies to documents that are explicitly loaded as data documents or to images. See implementation notes.</li>
+    <li>Cleaned up some unnecessary code from the source tree for unused build back-ends, Firefox marketplace "apps", and the rather ridiculous moz://a protocol handler.</li>
+    <li>Updated NSS to 3.52.8 to pick up several defense-in-depth security fixes.</li>
+    <li>UXP Mozilla security patch summary: 3 DiD, 12 not applicable.</li></ul>
+
+<span style="font-weight: bold;">Implementation notes:</span>
+<ul>
+    <li>Prior to this version, Pale Moon would apply Content Security Policies (CSPs) to all requests made to servers that would respond with a policy header, as one would expect for strict use of CSPs as-intended. Unfortunately, Chrome has been less strict in applying these policies and specifically excluded applying these policies to images and "data documents". As a result, web compatibility became a problem for non-Google browsers with webmasters being oblivious about their overzealous CSPs deployed on websites, causing images (especially SVG) and data to not load or load properly. To align with mainstream browser behavior and improve web compatibility on misconfigured websites, we are now no longer applying CSPs to images or documents explicitly loaded as arbitrary data.</li>
+    <li>We've adjusted default per-thread stack sizes in the platform to be more generous on all platforms. This allows the browser to render more deeply nested visual elements in web pages and the new limit matches the capabilities of mainstream browsers as a result. Please note that some custom builds may need to adjust their linker's stack sizes on some operating systems to come to a stable and usable build with this change since the new Goanna rendering depth requires this larger stack size to not run out of memory. The default per-thread stack size is now 2 MB with the exception of 32-bit Windows builds where 1.5 MB is used to go easy on its limited address space. Custom Linux builds with system-default small stack sizes should adjust their build configuration accordingly.</li></ul>
+
+<h3><a name="v31.1.1"></a>v31.1.1 (2022-07-07)</h3>
+This is a security update.
+
+<span style="font-weight: bold;">Changes/fixes:</span>
+<ul>
+    <li>Updated the list of blocked external protocol handlers to combat abuse of OS-supplied services on Windows.</li>
+    <li>Fixed a potential issue with revoked site certificates when connecting through a proxy.</li>
+    <li>Updated NSS to 3.52.7 to pick up some security fixes.</li>
+    <li>Updated site-specific user agent overrides to work around bad sniffing practices of dropbox and vimeo.</li>
+    <li>Security issues addressed: CVE-2022-34478, CVE-2022-34476, CVE-2022-34480 <span style="color: rgb(191, 64, 64);">DiD</span>, CVE-2022-34472, CVE-2022-34475 <span style="color: rgb(191, 64, 64);">DiD</span>, CVE-2022-34473 <span style="color: rgb(191, 64, 64);">DiD</span>, CVE-2022-34481 and a memory safety issue that doesn't have a CVE number.</li>
+    <li>UXP Mozilla security patch summary: 4 fixed, 4 DiD, 2 rejected, 11 not applicable.</li></ul>
+Rejected patches were for behavioral changes to long-standing drag and drop behavior that were marked as potential security issues. The amount of social engineering and user interaction required to abuse this behavior however has made it not a real practical issue over the past 9 years and the measures required to work around it as Mozilla has now done were considered disproportional in complexity and impact on browser behavior to warrant accepting them.
+
+<h3><a name="v31.1.0"></a>v31.1.0 (2022-06-07)</h3>
+This is a major development update, focusing on media support, browser stability, performance and web compatibility.
+
+<span style="font-weight: bold;">Changes/fixes:</span>
+<ul>
+    <li>Added Mojeek as an additional search engine in the browser. See implementation notes.</li>
+    <li>Implemented "nullish coalescing operator" (thanks, FranklinDM!) for web compatibility.</li>
+    <li>Fixed various crash scenarios in XPCOM.</li>
+    <li>Fixed an important stability and performance issue related to hardware acceleration.</li>
+    <li>Fixed a long-standing issue where overly-long address bar tooltips wouldn't break into multiple lines but instead cut off on the right side.</li>
+    <li>Fixed a long-standing issue where dynamic datalist updates for <code>&lt;select&gt;</code> and similar elements wouldn't properly update the option list.</li>
+    <li>Disabled broken links to MDN articles in developer tools.</li>
+    <li>Updated media support to include support for libavcodec 59/FFmpeg 5.0 for MP4 playback on Linux (thanks, Travis!)</li>
+    <li>Enabled the date picker for <code>&lt;input type=date&gt;</code>. See implementation notes.</li>
+    <li>Re-enabled the use of FIPS mode for NSS. See implementation notes.</li>
+    <li>Improved memory handling and memory safety in the JavaScript engine, further reducing current and future crash scenarios.</li>
+    <li>Improved memory handling in the graphics subsystem of Goanna.</li>
+    <li>Updated FFvpx to v4.2.7</li>
+    <li>Slightly reduced strictness of media checking for improved compatibility with questionable "gif" video encoders used on major websites.</li>
+    <li>Cleaned up the way file pickers (file open/save/save as dialogs) are handled on Windows.</li>
+    <li>Restored the <code>gMultiProcessBrowser</code> property of the browser for Firefox extension compatibility. See implementation notes.</li>
+    <li>Improved the way data is transferred to and from canvases to prevent memory safety issues.</li>
+    <li>Updated NSS to 3.52.6 to address security issues.</li>
+    <li>Reduced blocking severity for some extensions that were marked hard blockers for GRE (but aren't for UXP).</li>
+    <li>Security issues addressed: CVE-2022-31739, CVE-2022-31741, and other security issues that do not have a CVE number.</li>
+    <li>UXP Mozilla security patch summary: 2 fixed, 1 DiD, 26 not applicable.</li></ul>
+
+<span style="font-weight: bold;">Implementation/build notes:</span>
+<ul>
+    <li>Following the concerns surrounding bias, censorship and unwanted filtering of search results by almost all available search engines, we've contacted Mojeek to have their search engine added by default to Pale Moon. This was done to offer a truly independent search alternative that has its own (long-standing) search index of the Web and does not rely on the major indexers like Bing, Google or Yahoo, who all apply bias and filtering to varying degrees on their search results e.g. about politics or the war in the Ukraine). Since privacy-focused search engines like DuckDuckGo do rely on search results from these big indexers", whatever their "upstream" decides to be filtered out will also affect your results through those search engines. Mojeek offers its own, entirely independent search results which may provide you with truly independent alternative results. Give it a try!</li>
+    <li>Form input fields of type "date" will now pop up a graphical calendar to pick dates instead of having to manually enter the dates. Please note that the default format will match the base language of the browser (American English) which will be reflected in the mm/dd/yyyy placeholder. This is cosmetic only and does not actually influence how the date is passed to the server via the form. More work is needed for better localization of date and time input fields but that did not make this release.</li>
+    <li>FIPS mode is a special (rather archaic) operating mode of the NSS security library and software security device that handles certificates and credentials in the browser. In v31.0.0 this operating mode was no longer supported which resulted in some users who had previously enabled FIPS mode in the browser from accessing their credentials (giving errors on the master password, instead). For the time being, support for this mode is enabled again but if you use it, please disable this mode as it will go away. Standard operating mode with a master password is more secure than FIPS mode at this point, and FIPS was only ever necessary for US governmental use and "grandfathered in" without getting much attention. This will go away permanently over time so please pre-empt this removal by disabling FIPS mode if you had enabled it (its control can be found in Preferences -&gt; Advanced -&gt; Certificates tab -&gt; Button "Security devices" -- yes, it's buried pretty deep ;-) ).</li>
+    <li>Windows binaries are now being built and linked against a newer Windows SDK (10.0.22000.0) to align with system support for Windows 11. It is unlikely that this will negatively affect any users at this point in time.</li>
+    <li>While we don't support multi-process browsing or "electrolysis", extensions may still be checking what Firefox used as an indicator to know if electrolysis was enabled in it, which in some cases would require the extension to adjust its behavior. To provide better compatibility with legacy extensions that might otherwise error out when the gMultiprocessBrowser property was completely undefined, we restored this property (hard-coded to "false" since we don't support multi-process).</li></ul>
+
+<h3><a name="v31.0.0"></a>v31.0.0 (2022-05-10)</h3>
+This is a <span style="font-weight: bold;">new milestone release</span>.
+
+After our unacceptable and recalled release of v30.0.0 and 30.0.1 with the departure of one of the core devs from our team requiring us to rewind and re-do several months of work to exclude undesired code changes and what likely lay at the root of the plethora of stability and run-time issues of the recalled versions, we're back on track with a new milestone building on UXP and Goanna (v5.1) with many improvements and additional user-requested features. To prevent user confusion, we're skipping from 29 to 31.
+
+<span style="font-weight: bold;">Most important changes in this milestone:</span>
+<ul>
+    <li>We're once again accepting the installation of legacy Firefox extensions alongside our own Pale Moon exclusive extensions. As always, please note that using extensions for an old version of a different browser is entirely at your own risk and we obviously cannot and will not provide much (if any) support for their use. Firefox extensions will be indicated with an orange dot in the Add-ons Manager in the browser. This will include the converted extensions for the few of you who are coming from recalled versions with -fxguid suffixes.</li>
+    <li>Implemented Global Privacy Control, taking the place of the unenforceable "DNT" (Do Not Track) signal. Through GPC, you indicate to websites that you do not want them to share or sell your data.</li>
+    <li>Implemented "optional chaining" (thanks, FranklinDM!).</li>
+    <li>Implemented <code>setBaseAndExtent</code> for text selections.</li>
+    <li>Implemented <code>queueMicroTask()</code> "pseudo-promise" callbacks.</li>
+    <li>Implemented accepting unit-less values for <code>rootMargin</code> in Intersection observers for web compatibility, making it act more like CSS <code>margin</code> as one would expect.</li>
+    <li>Improvements to CSS grid and flexbox rendering and display following spec changes and improving web compatibility.</li>
+    <li>Improved performance of parallel web workers in JavaScript.</li>
+    <li>Improved display of <span style="font-family: cursive;">cursive</span> scripts (on Windows). Good-bye Comic Sans!</li>
+    <li>Updated various in-tree libraries.</li>
+    <li>"Default browser" controls in preferences has been moved to "General".</li>
+    <li>Added support for extended VPx codec strings in media delivery via MSE (RFC-6381).</li>
+    <li>Fixed a long-time regression where the browser would no longer honor old-style body and iframe body margins when indicated in the HTML tags directly instead of CSS. This improves compatibility with particularly old and/or archived websites.</li>
+    <li>Fixed several crashes and stability issues.</li>
+    <li>Added a licensing screen to the Windows installer to clarify the browser's licensing. In other installations, you may find this licensing statement in the added <cite>license.txt</cite> file in the browser installation location.</li>
+    <li>Removed all Google SafeBrowsing/URLClassifier service code.</li>
+    <li>Restored Mac OS X code and buildability in the platform.</li>
+    <li>Removed the non-standard <code>ArchiveReader</code> DOM API that was only ever a prototype implementation.</li>
+    <li>Removed most of the last vestiges of the invasive Mozilla Telemetry code from the platform. This potentially improves performance on some systems.</li>
+    <li>Removed leftover Electrolysis controls that could sometimes trick parts of the browser into starting in a (very broken) multi-process mode due to some plumbing for it still being present, if users would try to force the issue with preferences. Obviously, this was a footgun for power users.</li>
+    <li>Removed more Android/Fennec code (on-going effort to clean up our code).</li>
+    <li>Removed the Marionette automated testing framework.</li>
+    <li>Security issues addressed: CVE-2022-29915, CVE-2022-29911, and several issues that do not have a CVE number.</li>
+    <li>UXP Mozilla security patch summary: 4 fixed, 1 DiD, 19 not applicable.</li></ul>
