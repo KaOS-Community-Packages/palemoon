@@ -1,5 +1,5 @@
 pkgname=palemoon
-pkgver=31.4.1
+pkgver=32.5.2
 pkgrel=1
 pkgdesc="Open source web browser based on Firefox focusing on efficiency."
 arch=('x86_64')
@@ -7,9 +7,9 @@ url="https://linux.palemoon.org"
 license=('MPL' 'GPL' 'LGPL')
 depends=('gtk3' 'dbus-glib' 'desktop-file-utils' 'libxt' 'mime-types' 'nss' 'alsa-lib')
 optdepends=('hunspell' 'hyphen')
-source=("https://linux.palemoon.org/datastore/release/${pkgname}-${pkgver}.linux-x86_64-gtk3.tar.xz"
+source=("https://rm-us.palemoon.org/release/${pkgname}-${pkgver}.linux-x86_64-gtk3.tar.xz"
         "${pkgname}.desktop")
-md5sums=('cdf128564d485dfb57bd7f13eddf0d4d'
+md5sums=('0ca0d7d9bc15c865447e8a688c6ef03b'
          '0d4979b1746372fc2408bf76f146ae05')
 
 package() {
